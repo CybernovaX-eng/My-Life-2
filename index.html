@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>TechVerseX | ModhuSudhan Roy</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Orbitron&family=Roboto&display=swap');
+
+  /* Basic Reset */
+  * {
+    margin: 0; padding: 0; box-sizing: border-box;
+  }
+
+  body {
+    height: 100vh;
+    font-family: 'Roboto', sans-serif;
+    background-color: #0a0a0a;
+    overflow: hidden;
+    color: #f0f0f0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+
+  /* Website name - Green neon flicker animation */
+  #site-name {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 3.2rem;
+    color: #00ff00;
+    text-shadow:
+      0 0 5px #00ff00,
+      0 0 10px #00ff00,
+      0 0 20px #00ff00,
+      0 0 40px #00ff00;
+    margin-bottom: 2rem;
+    animation: neonFlicker 3s infinite alternate;
+  }
+
+  @keyframes neonFlicker {
+    0%, 100% {opacity: 1;}
+    50% {opacity: 0.6;}
+  }
+
+  /* Container for main content */
+  .content {
+    text-align: center;
+    max-width: 800px;
+    padding: 1rem 2rem;
+    background: rgba(10, 10, 10, 0.85);
+    border-radius: 15px;
+    box-shadow: 0 0 30px #ff000088;
+  }
+
+  h1 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 2.8rem;
+    color: #ff0000;
+    text-shadow:
+      0 0 5px #ff0000,
+      0 0 10px #ff0000,
+      0 0 15px #ff0000;
+    margin-bottom: 1rem;
+  }
+
+  p.bio {
+    font-size: 1.15rem;
+    color: #ddd;
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+    font-weight: 500;
+  }
+
+  p.quote {
+    font-style: italic;
+    color: #ff5555;
+    font-weight: 700;
+    font-size: 1.2rem;
+    text-shadow: 0 0 5px #ff5555;
+  }
+
+  /* Background animated cyber tools container */
+  #cyber-tools, #physics-formulas {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: -1;
+    overflow: hidden;
+  }
+
+  /* Text styling for background elements */
+  .cyber-word, .physics-word {
+    position: absolute;
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    color: #ff1a1a;
+    opacity: 0.15;
+    white-space: nowrap;
+    user-select: none;
+  }
+
+  .physics-word {
+    color: #ff4444;
+    opacity: 0.1;
+    font-size: 1.2rem;
+  }
+
+  /* Animations for drifting text */
+  @keyframes driftUp {
+    0% { transform: translateY(100vh) translateX(0) rotate(0deg); opacity: 0; }
+    50% { opacity: 0.15; }
+    100% { transform: translateY(-20vh) translateX(50px) rotate(360deg); opacity: 0; }
+  }
+</style>
+</head>
+<body>
+
+  <div id="site-name">TechVerseX</div>
+
+  <div class="content">
+    <h1>ModhuSudhan Roy</h1>
+    <p class="bio">
+      I am a dreamer born into hardship, rewriting my own fate through knowledge and hard work.<br />
+      Currently studying Electrical Engineering and diving deep into Cybersecurity.<br />
+      My mission: To build a world-changing technology company from scratch.<br />
+      I don’t wait for opportunities, I create them.
+    </p>
+    <p class="quote">"আমি ভাগ্যের গল্প লিখি না, আমি যুদ্ধ করে নিজের ভবিষ্যৎ গড়ে তুলি।"</p>
+  </div>
+
+  <div id="cyber-tools"></div>
+  <div id="physics-formulas"></div>
+
+<script>
+  const cyberTools = [
+    'Firewall', 'Malware', 'Exploit', 'Botnet', 'Trojan', 'Phishing',
+    'Encryption', 'Ransomware', 'Proxy', 'VPN', 'DDoS', 'Backdoor',
+    'Packet', 'Rootkit', 'Sandbox', 'Spyware', 'Worm', 'ZeroDay'
+  ];
+
+  const physicsFormulas = [
+    'E = mc²', 'F = ma', 'V = IR', 'p = mv', 'KE = ½mv²',
+    'PV = nRT', 'λ = h/p', 'Δx·Δp ≥ ħ/2', 'W = F·d', 'a² + b² = c²'
+  ];
+
+  const cyberContainer = document.getElementById('cyber-tools');
+  const physicsContainer = document.getElementById('physics-formulas');
+
+  function createWord(text, container, isPhysics = false) {
+    const span = document.createElement('span');
+    span.textContent = text;
+    span.className = isPhysics ? 'physics-word' : 'cyber-word';
+
+    // Random horizontal position inside viewport width
+    span.style.left = Math.random() * 90 + 'vw';
+    span.style.top = '110vh';
+
+    // Random animation duration and delay
+    const duration = 20 + Math.random() * 15; // 20 to 35 seconds
+    const delay = Math.random() * 20;
+
+    span.style.animation = `driftUp ${duration}s linear ${delay}s forwards`;
+
+    // Random font size
+    span.style.fontSize = (isPhysics ? 18 : 22) + Math.floor(Math.random() * 12) + 'px';
+
+    container.appendChild(span);
+
+    // Remove and recreate word after animation completes
+    setTimeout(() => {
+      if (container.contains(span)) {
+        container.removeChild(span);
+        createWord(text, container, isPhysics);
+      }
+    }, (duration + delay) * 1000);
+  }
+
+  // Initialize floating words on page load
+  cyberTools.forEach(tool => createWord(tool, cyberContainer));
+  physicsFormulas.forEach(formula => createWord(formula, physicsContainer, true));
+</script>
+
+</body>
+</html>
